@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ItemSchema = new Schema({
+const CategorySchema = new Schema({
   name: { type: String, required: true, minlength: 2 },
+  description: { type: String, required: true, minlength: 2 },
 });
 
-ItemSchema.virtual('url').get(function () {
+CategorySchema.virtual('url').get(function () {
   return '/category/' + this._id;
 });
+
+module.exports = mongoose.model('category', CategorySchema);

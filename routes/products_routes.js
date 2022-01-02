@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const producrsController = require('../controllers/products_controller');
 
-router.get('/', function (req, res, next) {
-  res.send('all products');
-});
+router.get('/', producrsController.getProducts);
 
-router.get('/form', (req, res, next) => {
-  res.send('products form');
-});
+router.get('/form', producrsController.getProductsForm);
 
 router.get('/:id', (req, res, next) => {
   res.send('product item ' + req.params.id);
