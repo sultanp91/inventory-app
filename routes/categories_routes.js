@@ -6,6 +6,8 @@ router.get('/', categoriesController.getCategories);
 
 router.get('/form', categoriesController.getCategoriesForm);
 
+router.post('/form', categoriesController.postCategoriesForm);
+
 router.get('/:id', function (req, res, next) {
   res.send('category: ' + req.params.id);
 });
