@@ -1,4 +1,5 @@
 const Category = require('../models/category');
+const { body, validationResult } = require('express-validator');
 
 exports.getCategories = function (req, res, next) {
   Category.find()
@@ -14,12 +15,37 @@ exports.getCategories = function (req, res, next) {
 };
 
 exports.getCategoriesForm = function (req, res, next) {
-  res.render('category_form', { title: 'Add new category' });
+  res.render('category_form', {
+    title: 'Add new category',
+    name: '',
+    description: '',
+    errors: null,
+  });
 };
 
-exports.postCategoriesForm = function (req, res, next) {
-  const name = req.body.name;
-  const description = req.body.description;
-  const category = new Category({ name, description });
-  category.save().then(res.redirect('/'));
-};
+exports.postCategoriesForm = [
+  body('name', 'Invalid name: minimum length of 2 character')
+    .trim()
+    .isLength({ min: 2 })
+    .escape(),
+  body('description', 'Invalid description: minimum length of 2 characters')
+    .trim()
+    .isLength({ min: 2 })
+    .escape(),
+  function (req, res, next) {
+    const errors = validationResult(req);
+    const name = req.body.name;
+    const description = req.body.description;
+    if (!errors.isEmpty()) {
+      res.render('category_form', {
+        title: 'Add new category',
+        name,
+        description,
+        errors: errors.array(),
+      });
+    } else {
+      const category = new Category({ name, description });
+      category.save().then(res.redirect('/categories'));
+    }
+  },
+];

@@ -9,12 +9,24 @@
   <body>
     <form action="" method="post">
       <label for="name">Category name:</label>
-      <input id="name" name="name" required type="text" />
+      <input id="name" name="name" value="<%= name %> " required type="text" />
       <br />
       <label for="desciption">Description:</label>
-      <input id="name" name="description" type="text" />
+      <input
+        id="name"
+        name="description"
+        value="<%= description %> "
+        type="text"
+      />
       <br />
       <button type="submit">Submit</button>
     </form>
+    <% if(errors){ %>
+    <ul>
+      <% for (const err of errors){ %>
+      <li><%= err.msg %></li>
+      <% } %>
+    </ul>
+    <% } %>
   </body>
 </html>
