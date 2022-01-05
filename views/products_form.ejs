@@ -6,7 +6,39 @@
   </head>
   <body>
     <h1><%= title %></h1>
+    <form action="" method="post">
+      <label for="name">Name:</label>
+      <input name="name" id="name" required value="<%= name %>" type="text" />
+      <label for="description">Description:</label>
+      <input
+        type="text"
+        id="description"
+        name="description"
+        required
+        value="<%= description %>"
+      />
+      <label for="category"></label>
+      <select name="category" id="category">
+        <% for(const category of categories){ %>
+        <option value="<%= category._id %>"><%= category.name %></option>
+      </select>
 
-    <form action="" method="post"></form>
+      <label for="price">Price</label>
+      <input
+        type="number"
+        name="price"
+        id="price"
+        required
+        value="<%= price %>"
+      />
+      <label for="quantity">Quantity:</label>
+      <input
+        type="number"
+        name="number"
+        id="number"
+        required
+        value="<%= quantity %> "
+      />
+    </form>
   </body>
 </html>
