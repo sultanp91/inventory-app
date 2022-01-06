@@ -19,8 +19,9 @@
       />
       <label for="category"></label>
       <select name="category" id="category">
-        <% for(const category of categories){ %>
-        <option value="<%= category._id %>"><%= category.name %></option>
+        <% for(const cat of categories){ %>
+        <option value="<%= cat._id %>"><%= cat.name %></option>
+        <% } %>
       </select>
 
       <label for="price">Price</label>
