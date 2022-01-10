@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products_routes');
 const categoriesRouter = require('./routes/categories_routes');
+exports.rootDir = path.resolve(__dirname);
 
 var app = express();
 

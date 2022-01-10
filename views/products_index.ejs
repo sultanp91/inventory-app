@@ -7,5 +7,9 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <% for (const product of products){ %>
+    <p><a href="<%= product.url %>"><%= product.name %></a></p>
+    <% } %>
   </body>
 </html>

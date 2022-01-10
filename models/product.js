@@ -7,10 +7,11 @@ const ProductSchema = new Schema({
   price: { type: Number, required: true },
   stock: { type: Number, required: true },
   category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+  image: { type: String },
 });
 
 ProductSchema.virtual('url').get(function () {
   return '/products/' + this._id;
 });
 
-exports = mongoose.model('Product', ProductSchema);
+module.exports = mongoose.model('Product', ProductSchema);

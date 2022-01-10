@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
       <label for="name">Name:</label>
       <input name="name" id="name" required value="<%= name %>" type="text" />
       <label for="description">Description:</label>
@@ -23,6 +23,8 @@
         <option value="<%= cat._id %>"><%= cat.name %></option>
         <% } %>
       </select>
+      <label for="image">Upload image:</label>
+      <input type="file" name="image" id="image" required />
 
       <label for="price">Price</label>
       <input
@@ -35,11 +37,12 @@
       <label for="quantity">Quantity:</label>
       <input
         type="number"
-        name="number"
-        id="number"
+        name="quantity"
+        id="quantity"
         required
         value="<%= quantity %> "
       />
+      <button type="submit">Submit</button>
     </form>
   </body>
 </html>

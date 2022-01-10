@@ -6,6 +6,8 @@ router.get('/', productsController.getProducts);
 
 router.get('/form', productsController.getProductsForm);
 
+router.post('/form', productsController.postProductsForm);
+
 router.get('/:id', (req, res, next) => {
   res.send('product item ' + req.params.id);
 });
