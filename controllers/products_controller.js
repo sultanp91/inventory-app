@@ -61,8 +61,15 @@ exports.postProductsForm = [
       price,
       stock,
       category,
+      image,
     });
 
     product.save().then(res.redirect('/products'));
   },
 ];
+
+exports.getProductPage = function (req, res, next) {
+  Product.findById(req.params.id).then(function (product) {
+    res.render('product_page', { title: product.name, product: product });
+  });
+};
