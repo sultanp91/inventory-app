@@ -8,11 +8,8 @@ const multer = require('multer');
 const { body, validationResult } = require('express-validator');
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(root + '/public/uploads'));
-  },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + file.originalname);
+    cb(null, Date.now() + '-' + file.originalname);
   },
 });
 
@@ -52,9 +49,13 @@ exports.postProductsForm = [
     const price = req.body.price;
     const stock = req.body.quantity;
     const category = req.body.category;
-    const image = req.file.filename;
-    console.log(image);
-    console.log(req.file);
+    const img = fs.readFileSync(req.file.path);
+    const encoded_image = img.toString('base64');
+    const image = {
+      mimetype: req.file.mimetype,
+      imageBuffer: Buffer.from(encoded_image, 'base64'),
+    };
+
     const product = new Product({
       name,
       description,
