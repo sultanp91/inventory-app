@@ -74,3 +74,19 @@ exports.getProductPage = function (req, res, next) {
     res.render('product_page', { title: product.name, product: product });
   });
 };
+
+exports.getProductUpdatePage = function (req, res, next) {
+  res.send('product update page');
+};
+
+exports.postProductUpdatePage = function (req, res, next) {
+  res.send('product delete page');
+};
+
+exports.getPoductDeletePage = function (req, res, next) {
+  res.send('product delete page');
+};
+
+exports.postProuctDeleteOage = function (req, res, next) {
+  res.send('post product delete page');
+};
