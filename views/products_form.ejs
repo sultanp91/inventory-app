@@ -26,11 +26,13 @@
         <% } %>
       </select>
       <label for="image">Upload image:</label>
-      <input type="file" name="image" id="image" required />
+      <input type="file" name="image" accept="image/*" id="image" required />
 
       <label for="price">Price</label>
       <input
         type="number"
+        step="0.01"
+        min="0"
         name="price"
         id="price"
         required
@@ -41,6 +43,8 @@
         type="number"
         name="quantity"
         id="quantity"
+        min="0"
+        step="1"
         required
         value="<%= quantity %> "
       />

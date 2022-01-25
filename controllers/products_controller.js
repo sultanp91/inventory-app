@@ -42,6 +42,25 @@ exports.getProductsForm = function (req, res, next) {
 };
 
 exports.postProductsForm = [
+  body('name', 'Invalid name: must be two alphanumeric characters')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body(
+    'description',
+    'Invalid description: must be two alphanumeric characters'
+  )
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('price', 'Price must be more than zero and to two decimal places')
+    .trim()
+    .escape()
+    .isDecimal({ force_decimal: true, decimal_digits: '2' }),
+  body('price', 'Price must be more than zero and to two decimal places')
+    .trim()
+    .escape()
+    .isDecimal({ force_decimal: true, decimal_digits: '2' }),
   upload.single('image'),
   function (req, res, next) {
     const name = req.body.name;
