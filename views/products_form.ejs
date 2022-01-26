@@ -46,9 +46,31 @@
         min="0"
         step="1"
         required
-        value="<%= quantity %> "
+        value="<%= quantity %>"
       />
       <button type="submit">Submit</button>
     </form>
+    <% if(errors){ %>
+    <ul>
+      <% for(const err of errors){ %>
+      <li><%= err.msg %></li>
+      <% } %>
+    </ul>
+
+    <% } %>
+    <script>
+      const fileInput = document.getElementById('image');
+
+      input.addEventListener('change', (event) => {
+        const target = event.target;
+        if (target.files && target.files[0]) {
+          const maxAllowedSize = 16 * 1024 * 1024;
+          if (target.files[0].size > maxAllowedSize) {
+            alert('Maximum file size is 16MB');
+            target.value = '';
+          }
+        }
+      });
+    </script>
   </body>
 </html>

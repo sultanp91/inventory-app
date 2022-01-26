@@ -34,6 +34,7 @@ exports.getProductsForm = function (req, res, next) {
         category: null,
         price: '',
         quantity: '',
+        errors: null,
       });
     })
     .catch((err) => {
@@ -42,49 +43,69 @@ exports.getProductsForm = function (req, res, next) {
 };
 
 exports.postProductsForm = [
-  body('name', 'Invalid name: must be two alphanumeric characters')
+  upload.single('image'),
+  body('name', 'Invalid name: must be at least one alphanumeric characters')
     .trim()
     .isLength({ min: 1 })
     .escape(),
   body(
     'description',
-    'Invalid description: must be two alphanumeric characters'
+    'Invalid description: must be at least one alphanumeric characters'
   )
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body('price', 'Price must be more than zero and to two decimal places')
-    .trim()
-    .escape()
-    .isDecimal({ force_decimal: true, decimal_digits: '2' }),
-  body('price', 'Price must be more than zero and to two decimal places')
-    .trim()
-    .escape()
-    .isDecimal({ force_decimal: true, decimal_digits: '2' }),
-  upload.single('image'),
+  body(
+    'price',
+    'Price must be more than zero and to two decimal places'
+  ).isDecimal({ decimal_digits: '2' }),
+  body('quantity', 'Quantity must be an integer greater than 0').isInt({
+    min: 0,
+  }),
   function (req, res, next) {
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
     const stock = req.body.quantity;
     const category = req.body.category;
+    console.log(req.file);
     const img = fs.readFileSync(req.file.path);
     const encoded_image = img.toString('base64');
     const image = {
       mimetype: req.file.mimetype,
       imageBuffer: Buffer.from(encoded_image, 'base64'),
     };
+    const errors = validationResult(req);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+      Category.find()
+        .then((categories) => {
+          res.render('products_form', {
+            title: 'Add new products',
+            categories: categories,
+            name: name,
+            description: description,
+            category: category,
+            price: price,
+            quantity: stock,
+            errors: errors.array(),
+          });
+        })
+        .catch((err) => {
+          next(err);
+        });
+    } else {
+      const product = new Product({
+        name,
+        description,
+        price,
+        stock,
+        category,
+        image,
+      });
 
-    const product = new Product({
-      name,
-      description,
-      price,
-      stock,
-      category,
-      image,
-    });
-
-    product.save().then(res.redirect('/products'));
+      product.save().then(res.redirect('/products'));
+    }
   },
 ];
 
