@@ -55,13 +55,16 @@ exports.postProductsForm = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body(
-    'price',
-    'Price must be more than zero and to two decimal places'
-  ).isDecimal({ decimal_digits: '2' }),
-  body('quantity', 'Quantity must be an integer greater than 0').isInt({
-    min: 0,
-  }),
+  body('price', 'Price must be more than zero and to two decimal places')
+    .trim()
+    .escape()
+    .isDecimal({ decimal_digits: '2' }),
+  body('quantity', 'Quantity must be an integer greater than 0')
+    .trim()
+    .escape()
+    .isInt({
+      min: 0,
+    }),
   function (req, res, next) {
     const name = req.body.name;
     const description = req.body.description;
