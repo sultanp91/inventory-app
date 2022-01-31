@@ -2,6 +2,13 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="/stylesheets/index.css" />
   </head>
   <body>
@@ -11,17 +18,17 @@
 
     <div class="container">
       <% for (const product of products){ %>
-      <div class="product">
-        <a href="<%= product.url %>">
+      <a href="<%= product.url %>">
+        <div class="product">
           <img
             class="product-index-image"
             src="<%= product.imageurl %>"
             alt="product image"
           />
           <p><%= product.name %></p>
-        </a>
-        <% } %>
-      </div>
+        </div>
+      </a>
+      <% } %>
     </div>
   </body>
 </html>

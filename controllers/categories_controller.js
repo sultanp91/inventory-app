@@ -1,4 +1,8 @@
 const Category = require('../models/category');
+const Product = require('../models/product');
+const ObjectId = require('mongoose').Types.ObjectId;
+const async = require('async');
+
 const { body, validationResult } = require('express-validator');
 
 exports.getCategories = function (req, res, next) {
@@ -49,3 +53,26 @@ exports.postCategoriesForm = [
     }
   },
 ];
+
+exports.getCategoryPage = function (req, res, next) {
+  async.parallel(
+    {
+      products: function (cb) {
+        Product.find({ category: ObjectId(req.params.id) }).exec(cb);
+      },
+      category: function (cb) {
+        Category.findById(req.params.id).exec(cb);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        next(err);
+      }
+      res.render('products_index', {
+        title: results.category.name,
+        description: results.category.description,
+        products: results.products,
+      });
+    }
+  );
+};

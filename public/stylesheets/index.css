@@ -2,9 +2,13 @@ html {
   font-size: 62.5%;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  padding: 50px;
-  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 a {
@@ -30,4 +34,14 @@ h1 {
   width: 60rem;
   display: block;
   margin: 0 auto;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto, 30rem);
+}
+
+.product-index-image {
+  width: 100%;
 }
