@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/stylesheets/index.css" />
+  </head>
+  <body>
+    <%- include('./partials/header.ejs') %> <%- include('./partials/navbar.ejs')
+    %>
+    <h2><%= title %></h2>
+    <p><%= description %></p>
+
+    <div class="container">
+      <% for (const product of products){ %>
+      <a href="<%= product.url %>">
+        <div class="product">
+          <img
+            class="product-index-image"
+            src="<%= product.imageurl %>"
+            alt="product image"
+          />
+          <p><%= product.name %></p>
+        </div>
+      </a>
+      <% } %>
+    </div>
+
+    <hr>
+
+    <a href="<%= url + "/update" %>">Update</a>
+    <a href="<%= url + "/delete" %>">Delete</a>
+
+  </body>
+</html>

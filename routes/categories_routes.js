@@ -10,4 +10,12 @@ router.post('/form', categoriesController.postCategoriesForm);
 
 router.get('/:id', categoriesController.getCategoryPage);
 
+router.get('/:id/update', categoriesController.getCategoryUpdateForm);
+
+router.post('/:id/update', categoriesController.postCategoryUpdateForm);
+
+router.get('/:id/delete', categoriesController.getCategoryPage);
+
+router.post('/:id/delete', categoriesController.getCategoryPage);
+
 module.exports = router;

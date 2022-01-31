@@ -68,11 +68,60 @@ exports.getCategoryPage = function (req, res, next) {
       if (err) {
         next(err);
       }
-      res.render('products_index', {
+      res.render('category_page', {
         title: results.category.name,
         description: results.category.description,
+        url: results.category.url,
         products: results.products,
       });
     }
   );
 };
+
+exports.getCategoryUpdateForm = async function (req, res, next) {
+  const category = await Category.findById(req.params.id);
+
+  res.render('category_form', {
+    title: 'Update Category',
+    name: category.name,
+    description: category.description,
+    errors: null,
+  });
+};
+
+exports.postCategoryUpdateForm = [
+  body('name', 'Invalid name: minimum length of 2 character')
+    .trim()
+    .isLength({ min: 2 })
+    .escape(),
+  body('description', 'Invalid description: minimum length of 2 characters')
+    .trim()
+    .isLength({ min: 2 })
+    .escape(),
+  function (req, res, next) {
+    const errors = validationResult(req);
+    const name = req.body.name;
+    const description = req.body.description;
+    if (!errors.isEmpty()) {
+      res.render('category_form', {
+        title: 'Update Category',
+        name,
+        description,
+        errors: errors.array(),
+      });
+    } else {
+      Category.findByIdAndUpdate(
+        req.params.id,
+        { name, description },
+        {},
+        function (err, result) {
+          if (err) {
+            next(err);
+          } else {
+            res.redirect(result.url);
+          }
+        }
+      );
+    }
+  },
+];
