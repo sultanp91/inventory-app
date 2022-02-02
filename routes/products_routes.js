@@ -10,4 +10,6 @@ router.post('/form', productsController.postProductsForm);
 
 router.get('/:id', productsController.getProductPage);
 
+router.get('/:id/update', productsController.getProductUpdatePage);
+
 module.exports = router;

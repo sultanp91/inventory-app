@@ -33,7 +33,7 @@ exports.getProductsForm = function (req, res, next) {
         description: '',
         category: null,
         price: '',
-        quantity: '',
+        stock: '',
         errors: null,
       });
     })
@@ -59,7 +59,7 @@ exports.postProductsForm = [
     .trim()
     .escape()
     .isDecimal({ decimal_digits: '2' }),
-  body('quantity', 'Quantity must be an integer greater than 0')
+  body('stock', 'Quantity must be an integer greater than 0')
     .trim()
     .escape()
     .isInt({
@@ -69,7 +69,7 @@ exports.postProductsForm = [
     const name = req.body.name;
     const description = req.body.description;
     const price = req.body.price;
-    const stock = req.body.quantity;
+    const stock = req.body.stock;
     const category = req.body.category;
     console.log(req.file);
     const img = fs.readFileSync(req.file.path);
@@ -90,7 +90,7 @@ exports.postProductsForm = [
             description: description,
             category: category,
             price: price,
-            quantity: stock,
+            stock: stock,
             errors: errors.array(),
           });
         })
@@ -118,8 +118,21 @@ exports.getProductPage = function (req, res, next) {
   });
 };
 
-exports.getProductUpdatePage = function (req, res, next) {
-  res.send('product update page');
+exports.getProductUpdatePage = async function (req, res, next) {
+  const { name, description, price, stock, category } = await Product.findById(
+    req.params.id
+  );
+  const categories = await Category.find();
+  res.render('products_update_form', {
+    title: name,
+    name,
+    description,
+    price,
+    stock,
+    category,
+    categories,
+    errors: null,
+  });
 };
 
 exports.postProductUpdatePage = function (req, res, next) {
