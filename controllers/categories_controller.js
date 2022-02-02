@@ -141,7 +141,6 @@ exports.postCategoryDelete = [
   async function (req, res, next) {
     const errors = validationResult(req);
     const category = await Category.findById(req.params.id);
-
     if (!errors.isEmpty()) {
       res.render('category_delete', {
         title: category.name,
