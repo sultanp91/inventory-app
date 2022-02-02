@@ -125,3 +125,41 @@ exports.postCategoryUpdateForm = [
     }
   },
 ];
+
+exports.getCategoryDelete = async function (req, res, next) {
+  const category = await Category.findById(req.params.id);
+  res.render('category_delete', {
+    title: category.name,
+    id: category._id,
+    errors: null,
+    correctPassword: null,
+  });
+};
+
+exports.postCategoryDelete = [
+  body('password', 'No html characters allowed').trim().escape(),
+  async function (req, res, next) {
+    const errors = validationResult(req);
+    const category = await Category.findById(req.params.id);
+
+    if (!errors.isEmpty()) {
+      res.render('category_delete', {
+        title: category.name,
+        id: category._id,
+        errors: errors.array(),
+        incorrectPassword: false,
+      });
+    } else if (!req.body.password === 'securepw') {
+      res.render('category_delete', {
+        title: category.name,
+        id: category._id,
+        errors: errors.array(),
+        incorrectPassword: true,
+      });
+    } else if (req.body.password === 'securepw') {
+      await Category.findByIdAndRemove(req.body.id);
+      await Product.deleteMany({ category: ObjectId(req.body.id) });
+      res.redirect('/categories');
+    }
+  },
+];

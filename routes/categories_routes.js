@@ -14,7 +14,7 @@ router.get('/:id/update', categoriesController.getCategoryUpdateForm);
 
 router.post('/:id/update', categoriesController.postCategoryUpdateForm);
 
-router.get('/:id/delete', categoriesController.getCategoryPage);
+router.get('/:id/delete', categoriesController.getCategoryDelete);
 
 router.post('/:id/delete', categoriesController.getCategoryPage);
 
