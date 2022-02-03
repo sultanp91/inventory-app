@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/stylesheets/index.css" />
+  </head>
+  <body>
+    <%- include('./partials/header.ejs') %> <%- include('./partials/navbar.ejs')
+    %>
+    <h2><%= title %></h2>
+    <form action="" method="post">
+      <input type="hidden" name="id" value="<%= id %>" />
+      <p>Are you sure you want to delete?</p>
+      <label for="password">Password:</label>
+      <input type="text" name="password" id="password" required />
+      <button type="submit">Delete</button>
+    </form>
+  </body>
+</html>

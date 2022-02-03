@@ -12,4 +12,10 @@ router.get('/:id', productsController.getProductPage);
 
 router.get('/:id/update', productsController.getProductUpdatePage);
 
+router.post('/:id/update', productsController.postProductUpdatePage);
+
+router.get('/:id/delete', productsController.getProductDeletePage);
+
+router.post('/:id/delete', productsController.postProductDelete);
+
 module.exports = router;

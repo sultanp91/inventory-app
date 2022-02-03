@@ -71,7 +71,6 @@ exports.postProductsForm = [
     const price = req.body.price;
     const stock = req.body.stock;
     const category = req.body.category;
-    console.log(req.file);
     const img = fs.readFileSync(req.file.path);
     const encoded_image = img.toString('base64');
     const image = {
@@ -79,7 +78,6 @@ exports.postProductsForm = [
       imageBuffer: Buffer.from(encoded_image, 'base64'),
     };
     const errors = validationResult(req);
-    console.log(errors);
     if (!errors.isEmpty()) {
       Category.find()
         .then((categories) => {
@@ -135,14 +133,115 @@ exports.getProductUpdatePage = async function (req, res, next) {
   });
 };
 
-exports.postProductUpdatePage = function (req, res, next) {
-  res.send('product delete page');
+exports.postProductUpdatePage = [
+  upload.single('image'),
+  body('name', 'Invalid name: must be at least one alphanumeric characters')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body(
+    'description',
+    'Invalid description: must be at least one alphanumeric characters'
+  )
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('price', 'Price must be more than zero and to two decimal places')
+    .trim()
+    .escape()
+    .isDecimal({ decimal_digits: '2' }),
+  body('stock', 'Quantity must be an integer greater than 0')
+    .trim()
+    .escape()
+    .isInt({
+      min: 0,
+    }),
+  async function (req, res, next) {
+    const name = req.body.name;
+    const description = req.body.description;
+    const price = req.body.price;
+    const stock = req.body.stock;
+    const category = req.body.category;
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      Category.find()
+        .then((categories) => {
+          res.render('products_form', {
+            title: 'Add new products',
+            categories: categories,
+            name: name,
+            description: description,
+            category: category,
+            price: price,
+            stock: stock,
+            errors: errors.array(),
+          });
+        })
+        .catch((err) => {
+          next(err);
+        });
+    }
+
+    if (!req.file) {
+      console.log('test');
+      const { image } = await Product.findById(req.params.id);
+      await Product.findByIdAndUpdate(req.params.id, {
+        name,
+        description,
+        price,
+        stock,
+        category,
+        image,
+      });
+    } else {
+      const img = fs.readFileSync(req.file.path);
+      const encoded_image = img.toString('base64');
+      const image = {
+        mimetype: req.file.mimetype,
+        imageBuffer: Buffer.from(encoded_image, 'base64'),
+      };
+      await Product.findByIdAndUpdate(req.params.id, {
+        name,
+        description,
+        price,
+        stock,
+        category,
+        image,
+      });
+    }
+    res.redirect('/products/' + req.params.id);
+  },
+];
+
+exports.getProductDeletePage = async function (req, res, next) {
+  const product = await Product.findById(req.params.id);
+  res.render('product_delete', { title: product.name, id: req.params.id });
 };
 
-exports.getPoductDeletePage = function (req, res, next) {
-  res.send('product delete page');
-};
+exports.postProductDelete = [
+  body('password', 'No html characters allowed').trim().escape(),
 
-exports.postProuctDeleteOage = function (req, res, next) {
-  res.send('post product delete page');
-};
+  async function (req, res, next) {
+    const errors = validationResult(req);
+    const product = await Product.findById(req.params.id);
+    if (!errors.isEmpty()) {
+      res.render('product_delete', {
+        title: product.name,
+        id: product._id,
+        errors: errors.array(),
+        incorrectPassword: false,
+      });
+    } else if (!req.body.password === 'securepw') {
+      res.render('product_delete', {
+        title: product.name,
+        id: product._id,
+        errors: errors.array(),
+        incorrectPassword: true,
+      });
+    } else if (req.body.password === 'securepw') {
+      await Product.findByIdAndRemove(req.body.id);
+      res.redirect('/');
+    }
+  },
+];
