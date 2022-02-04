@@ -221,7 +221,6 @@ exports.getProductDeletePage = async function (req, res, next) {
 
 exports.postProductDelete = [
   body('password', 'No html characters allowed').trim().escape(),
-
   async function (req, res, next) {
     const errors = validationResult(req);
     const product = await Product.findById(req.params.id);
@@ -241,7 +240,7 @@ exports.postProductDelete = [
       });
     } else if (req.body.password === 'securepw') {
       await Product.findByIdAndRemove(req.body.id);
-      res.redirect('/');
+      res.redirect('/products');
     }
   },
 ];

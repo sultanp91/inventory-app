@@ -9,24 +9,38 @@ html {
 
 body {
   font-family: 'Lato', sans-serif;
+  background-color: #fefae0;
 }
 
-a {
-  color: #00b7ff;
+a,
+a:link,
+a:visited {
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: black;
+}
+
+ul > a:hover {
+  color: #eee;
 }
 
 .header {
   text-align: center;
+  background-color: #dda15e;
 }
 
 .nav {
   display: flex;
   justify-content: space-around;
+  background-color: #dda15e;
+  padding: 1rem 0;
 }
 
 h1 {
   font-size: 2.4rem;
   text-align: center;
+  padding: 1.5rem 0;
 }
 
 .product-image {
