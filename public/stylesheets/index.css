@@ -59,3 +59,37 @@ h1 {
 .product-index-image {
   width: 100%;
 }
+
+.form {
+  max-width: 60rem;
+  width: 95%;
+  margin: 3rem auto;
+}
+
+.form input {
+  display: block;
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 1.8rem;
+}
+
+.form label {
+  font-size: 1.8rem;
+  display: block;
+  padding: 1rem 0;
+}
+
+.form button {
+  margin-top: 1.5rem;
+  display: block;
+  width: 100%;
+  padding: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.form select {
+  display: block;
+  width: 100%;
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
