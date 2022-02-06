@@ -27,7 +27,7 @@ exports.getProductsForm = function (req, res, next) {
   Category.find()
     .then((categories) => {
       res.render('products_form', {
-        title: 'Add new products',
+        title: 'Add New Product',
         categories: categories,
         name: '',
         description: '',

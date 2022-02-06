@@ -38,6 +38,12 @@ ul > a:hover {
 }
 
 h1 {
+  font-size: 3rem;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+h2 {
   font-size: 2.4rem;
   text-align: center;
   padding: 1.5rem 0;
