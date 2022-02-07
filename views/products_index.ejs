@@ -14,19 +14,17 @@
   <body>
     <%- include('./partials/header.ejs') %> <%- include('./partials/navbar.ejs')
     %>
-    <p>Welcome to <%= title %></p>
+    <h2><%= title %></h2>
 
     <div class="container">
       <% for (const product of products){ %>
-      <a href="<%= product.url %>">
-        <div class="product">
-          <img
-            class="product-index-image"
-            src="<%= product.imageurl %>"
-            alt="product image"
-          />
-          <p><%= product.name %></p>
-        </div>
+      <a class="product-index-link" href="<%= product.url %>">
+        <img
+          class="product-index-image"
+          src="<%= product.imageurl %>"
+          alt="product image"
+        />
+        <p class="product-index-name"><%= product.name %></p>
       </a>
       <% } %>
     </div>

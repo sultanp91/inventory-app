@@ -9,7 +9,7 @@ exports.getCategories = function (req, res, next) {
   Category.find()
     .then((categories) => {
       res.render('category_index', {
-        title: 'All Categories',
+        title: 'Category Index',
         categories: categories,
       });
     })

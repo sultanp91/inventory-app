@@ -16,7 +16,10 @@
     %>
     <h2><%= title %></h2>
     <% for (const category of categories) { %>
-    <h2><a href="<%= category.url %>"><%= category.name %></a></h2>
+    <div class="category-index-div">
+      <h2><a href="<%= category.url %>"><%= category.name %></a></h2>
+      <p><%= category.description %></p>
+    </div>
     <% } %>
   </body>
 </html>
