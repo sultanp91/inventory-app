@@ -20,6 +20,19 @@
       <p>Are you sure you want to delete?</p>
       <label for="password">Password:</label>
       <input type="text" name="password" id="password" required />
+      <% if(!correctPassword){ %>
+      <p style="color: red; font-size: 14px; margin-top: 5px">
+        Incorrect password
+      </p>
+      <% } %> <% if(errors){ %>
+      <ul>
+        <% for (const err of errors){ %>
+        <li style="color: red; font-size: 14px; margin-top: 5px">
+          <%= err.msg %>
+        </li>
+        <% } %>
+      </ul>
+      <% } %>
       <button type="submit">Delete</button>
     </form>
   </body>

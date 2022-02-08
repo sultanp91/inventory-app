@@ -216,7 +216,12 @@ exports.postProductUpdatePage = [
 
 exports.getProductDeletePage = async function (req, res, next) {
   const product = await Product.findById(req.params.id);
-  res.render('product_delete', { title: product.name, id: req.params.id });
+  res.render('product_delete', {
+    title: product.name,
+    id: req.params.id,
+    correctPassword: true,
+    errors: null,
+  });
 };
 
 exports.postProductDelete = [
@@ -229,14 +234,14 @@ exports.postProductDelete = [
         title: product.name,
         id: product._id,
         errors: errors.array(),
-        incorrectPassword: false,
+        correctPassword: false,
       });
-    } else if (!req.body.password === 'securepw') {
+    } else if (req.body.password !== 'securepw') {
       res.render('product_delete', {
         title: product.name,
         id: product._id,
-        errors: errors.array(),
-        incorrectPassword: true,
+        errors: null,
+        correctPassword: false,
       });
     } else if (req.body.password === 'securepw') {
       await Product.findByIdAndRemove(req.body.id);

@@ -20,7 +20,7 @@ exports.getCategories = function (req, res, next) {
 
 exports.getCategoriesForm = function (req, res, next) {
   res.render('category_form', {
-    title: 'Add new category',
+    title: 'Add New Category',
     name: '',
     description: '',
     errors: null,
@@ -132,7 +132,7 @@ exports.getCategoryDelete = async function (req, res, next) {
     title: category.name,
     id: category._id,
     errors: null,
-    correctPassword: null,
+    correctPassword: true,
   });
 };
 
@@ -146,19 +146,23 @@ exports.postCategoryDelete = [
         title: category.name,
         id: category._id,
         errors: errors.array(),
-        incorrectPassword: false,
+        correctPassword: false,
       });
-    } else if (!req.body.password === 'securepw') {
+    } else if (req.body.password !== 'securepw') {
       res.render('category_delete', {
         title: category.name,
         id: category._id,
-        errors: errors.array(),
-        incorrectPassword: true,
+        errors: null,
+        correctPassword: false,
       });
     } else if (req.body.password === 'securepw') {
-      await Category.findByIdAndRemove(req.body.id);
-      await Product.deleteMany({ category: ObjectId(req.body.id) });
-      res.redirect('/categories');
+      try {
+        await Category.findByIdAndRemove(req.body.id);
+        await Product.deleteMany({ category: ObjectId(req.body.id) });
+        res.redirect('/categories');
+      } catch (err) {
+        next(err);
+      }
     }
   },
 ];
