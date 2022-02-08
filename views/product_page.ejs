@@ -15,14 +15,17 @@
   <body>
     <%- include('./partials/header.ejs') %> <%- include('./partials/navbar.ejs')
     %>
-    <h1><%= product.name %></h1>
+    <h2><%= product.name %></h2>
     <img class="product-image" src="<%= product.imageurl %>" />
-    <p><%= product.description %></p>
-    <p>£<%= product.price %></p>
-    <p>QTY: <%= product.stock %></p>
+    <p class="product-details"><strong>Description:</strong> <%= product.description %></p>
+    <p class="product-details"><strong>Price: </strong>£<%= product.price %></p>
+    <p class="product-details"><strong>Quantity: </strong> <%= product.stock %></p>
 <hr>
-<a href="<%= product.url + "/update" %>">Update</a>
-<a href="<%= product.url + "/delete" %>">Delete</a>
+<div class="update-delete">
+  <a href="<%= product.url + "/update" %>">Update</a>
+  <a href="<%= product.url + "/delete" %>">Delete</a>
+</div>
+
 
   </body>
 </html>

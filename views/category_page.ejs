@@ -15,7 +15,7 @@
     <%- include('./partials/header.ejs') %> <%- include('./partials/navbar.ejs')
     %>
     <h2><%= title %></h2>
-    <p><%= description %></p>
+    <p class="product-details"><%= description %></p>
 
     <div class="container">
       <% for (const product of products){ %>
@@ -33,9 +33,9 @@
     </div>
 
     <hr>
-
+    <div class="update-delete">
     <a href="<%= url + "/update" %>">Update</a>
     <a href="<%= url + "/delete" %>">Delete</a>
-
+    </div>
   </body>
 </html>

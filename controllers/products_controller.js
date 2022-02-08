@@ -19,7 +19,7 @@ exports.getProducts = function (req, res, next) {
   Product.find()
     .populate('category')
     .then((products) => {
-      res.render('products_index', { title: 'all products', products });
+      res.render('products_index', { title: 'All Products', products });
     });
 };
 
