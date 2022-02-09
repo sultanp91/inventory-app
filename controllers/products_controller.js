@@ -105,22 +105,29 @@ exports.postProductsForm = [
         image,
       });
 
-      product.save().then(res.redirect('/products'));
+      product.save().then(() => {
+        res.redirect(product.url);
+      });
     }
   },
 ];
 
 exports.getProductPage = function (req, res, next) {
-  Product.findById(req.params.id).then(function (product) {
-    res.render('product_page', { title: product.name, product: product });
-  });
+  Product.findById(req.params.id)
+    .then(function (product) {
+      res.render('product_page', { title: product.name, product: product });
+    })
+    .catch(console.log((err) => console.log(err)));
 };
 
 exports.getProductUpdatePage = async function (req, res, next) {
   const { name, description, price, stock, category } = await Product.findById(
     req.params.id
   );
+
   const categories = await Category.find();
+  console.log(category, categories);
+
   res.render('products_update_form', {
     title: name,
     name,

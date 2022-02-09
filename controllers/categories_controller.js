@@ -49,7 +49,9 @@ exports.postCategoriesForm = [
       });
     } else {
       const category = new Category({ name, description });
-      category.save().then(res.redirect('/categories'));
+      category.save().then(() => {
+        res.redirect(category.url);
+      });
     }
   },
 ];

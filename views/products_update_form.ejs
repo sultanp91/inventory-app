@@ -14,7 +14,7 @@
   <body>
     <%- include('./partials/header.ejs') %> <%- include('./partials/navbar.ejs')
     %>
-    <h1>Update: <%= title %></h1>
+    <h2>Update: <%= title %></h2>
     <form class="form" action="" method="post" enctype="multipart/form-data">
       <label for="name">Name:</label>
       <input name="name" id="name" required value="<%= name %>" type="text" />
@@ -29,10 +29,10 @@
       <label for="category"></label>
       <select name="category" id="category">
         <% for(const cat of categories){ %>
-        <option value="<%= cat._id %>" <%= cat._id === category ? "selected" : "" %> ><%= cat.name %></option>
+        <option value="<%= cat._id %>" <%= cat._id.toString() === category.toString() ? 'selected' : '' %> ><%= cat.name %></option>
         <% } %>
       </select>
-      <label for="image">Upload image:</label>
+      <label for="image">Change image:</label>
       <input type="file" name="image" accept="image/*" id="image" />
 
       <label for="price">Price</label>
@@ -43,7 +43,7 @@
         name="price"
         id="price"
         required
-        value="<%= price %>"
+        value="<%= price.toFixed(2) %>"
       />
       <label for="stock">Quantity:</label>
       <input

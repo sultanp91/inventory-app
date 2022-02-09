@@ -18,7 +18,7 @@
     <h2><%= product.name %></h2>
     <img class="product-image" src="<%= product.imageurl %>" />
     <p class="product-details"><strong>Description:</strong> <%= product.description %></p>
-    <p class="product-details"><strong>Price: </strong>£<%= product.price %></p>
+    <p class="product-details"><strong>Price: </strong>£<%= product.price.toFixed(2) %></p>
     <p class="product-details"><strong>Quantity: </strong> <%= product.stock %></p>
 <hr>
 <div class="update-delete">
