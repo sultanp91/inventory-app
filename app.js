@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+require('dotenv').config();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products_routes');
@@ -25,8 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const mongoose = require('mongoose');
 
-const mongoDB =
-  'mongodb+srv://sultan:pa$$word123@cluster0.hrezy.mongodb.net/inventory-app?retryWrites=true&w=majority';
+const mongoDB = process.env.DB;
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
